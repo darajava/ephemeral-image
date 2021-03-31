@@ -1,51 +1,38 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
+const styles = {
+  main: {
+    fontSize: "16px",
+    padding: "30px",
+    width: 300,
+    fontFamily: "'Lato', sans-serif",
+    background: "#444",
+    color: "white",
+  },
+  title: {
+    opacity: 0.2,
+    fontSize: 28,
+    marginBottom: 18,
+    fontFamily: "'Train One', cursive",
+  },
+  text: {
+    marginTop: 8,
+  },
+};
+
 const Popup = () => {
-  const [count, setCount] = useState(0);
-  const [currentURL, setCurrentURL] = useState<string>();
-
-  useEffect(() => {
-    chrome.browserAction.setBadgeText({ text: count.toString() });
-  }, [count]);
-
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      setCurrentURL(tabs[0].url);
-    });
-  }, []);
-
-  const changeBackground = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            color: "#555555",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
-  };
-
   return (
-    <>
-      <ul style={{ minWidth: "700px" }}>
-        <li>Current URL: {currentURL}</li>
-        <li>Current Time: {new Date().toLocaleTimeString()}</li>
-      </ul>
-      <button
-        onClick={() => setCount(count + 1)}
-        style={{ marginRight: "5px" }}
-      >
-        count up
-      </button>
-      <button onClick={changeBackground}>change background</button>
-    </>
+    <div style={styles.main}>
+      <div style={styles.title}>ephemeral image</div>
+      <div style={styles.text}>
+        To share a temporary image URL, right click on an image and click "Copy
+        ephemeral URL".
+      </div>
+      <div style={styles.text}>
+        Your image will disappear after a few hours.
+      </div>
+    </div>
   );
 };
 
