@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
 const port = 3000;
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -7,7 +8,7 @@ const fs = require("fs"),
   request = require("request");
 
 app.use(bodyParser.json());
-
+app.use(cors());
 // const dir = path.join(__dirname, "public");
 
 // app.use(express.static(dir));
@@ -52,7 +53,7 @@ app.post("/upload", (req, res) => {
   const imageId = makeid(15);
 
   download(image, imageId, () => {
-    res.status(200).send("http://localhost:3000/" + imageId);
+    res.status(200).send("http://darajava.ie:3000/" + imageId);
   });
 });
 
